@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import {faker} from '@faker-js/faker';
+import {paths} from '../playwright.config';
 
 export interface StoredUserData {
     name: string;
@@ -59,7 +60,7 @@ export function generateUserData(): StoredUserData {
     };
 }
 
-const DEFAULT_ARTIFACT_PATH = path.join(process.cwd(), 'data', 'registered-user.json');
+const DEFAULT_ARTIFACT_PATH = path.join(process.cwd(), 'data', paths.registeredUserFileName);
 
 export function saveUserData(data: StoredUserData, filePath: string = DEFAULT_ARTIFACT_PATH): void {
     const dir = path.dirname(filePath);
@@ -67,10 +68,4 @@ export function saveUserData(data: StoredUserData, filePath: string = DEFAULT_AR
         fs.mkdirSync(dir, {recursive: true});
     }
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-}
-
-export function loadUserData(filePath: string = DEFAULT_ARTIFACT_PATH): StoredUserData | null {
-    if (!fs.existsSync(filePath)) return null;
-    const content = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(content) as StoredUserData;
 }

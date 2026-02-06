@@ -1,5 +1,14 @@
-import { defineConfig, devices } from '@playwright/test';
-import { metadata } from './config/metadata';
+import {defineConfig, devices} from '@playwright/test';
+
+/** Custom config: timeouts, flags. */
+export const metadata = {
+    popupTimeout: 3_000,
+};
+
+/** Custom config: artifact paths and file names. */
+export const paths = {
+    registeredUserFileName: 'registered-user.json',
+};
 
 /**
  * Read environment variables from file.

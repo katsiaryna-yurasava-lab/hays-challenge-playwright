@@ -8,18 +8,12 @@ import {
     saveUserData,
     type StoredUserData,
 } from '../utils/userData';
-import * as path from 'path';
 
 test.describe('User Signup', () => {
     let userData: StoredUserData;
 
     test.beforeEach(() => {
         userData = generateUserData();
-    });
-
-    test.afterEach(() => {
-        const artifactPath = path.join(process.cwd(), 'data', 'registered-user.json');
-        saveUserData(userData, artifactPath);
     });
 
     test('Signup with dynamic data, validate success, and store user data', async ({
@@ -68,6 +62,10 @@ test.describe('User Signup', () => {
             await accountCreatedPage.clickContinue();
 
             await homePage.expectLoggedInAs(userData.firstName, userData.lastName);
+        });
+
+        await test.step('5. Store user data in shared artifact', async () => {
+            saveUserData(userData);
         });
     });
 });

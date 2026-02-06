@@ -1,5 +1,5 @@
 import {type Locator, type Page} from '@playwright/test';
-import {metadata} from '../config/metadata';
+import {metadata} from '../playwright.config';
 
 export class LoginPage {
     readonly page: Page;
