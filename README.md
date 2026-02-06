@@ -5,7 +5,7 @@ Test automation for [Automation Exercise](https://automationexercise.com): user 
 ## Requirements
 
 - Node.js 18+
-- npm
+- npm 8+
 
 ## Installation
 

@@ -56,8 +56,13 @@ test.describe('User Signup', () => {
 
         await test.step('4. Validate that the account is created successfully', async () => {
             await expect(accountCreatedPage.headingAccountCreated).toBeVisible();
-            await expect(accountCreatedPage.textCongratulations).toBeVisible();
-            await expect(accountCreatedPage.textMemberPrivileges).toBeVisible();
+            await expect(accountCreatedPage.formSection).toBeVisible();
+            await expect(accountCreatedPage.formSection).toContainText(
+                'Congratulations! Your new account has been successfully created!'
+            );
+            await expect(accountCreatedPage.formSection).toContainText(
+                'You can now take advantage of member privileges to enhance your online shopping experience with us.'
+            );
 
             await accountCreatedPage.clickContinue();
 

@@ -1,11 +1,10 @@
-import {type Page, type Locator} from '@playwright/test';
+import {expect, type Page, type Locator} from '@playwright/test';
 
 export class AccountCreatedPage {
     readonly page: Page;
 
     readonly headingAccountCreated: Locator;
-    readonly textCongratulations: Locator;
-    readonly textMemberPrivileges: Locator;
+    readonly formSection: Locator;
     readonly continueLink: Locator;
 
     constructor(page: Page) {
@@ -14,12 +13,7 @@ export class AccountCreatedPage {
         this.headingAccountCreated = page.getByRole('heading', {
             name: /account created!/i,
         });
-        this.textCongratulations = page.getByText(
-            /Congratulations! Your new account has been successfully created!/i
-        );
-        this.textMemberPrivileges = page.getByText(
-            /You can now take advantage of member privileges to enhance your online shopping experience with us\./i
-        );
+        this.formSection = page.locator('section#form');
         this.continueLink = page.locator('a[data-qa="continue-button"]');
     }
 
@@ -27,9 +21,14 @@ export class AccountCreatedPage {
         await this.headingAccountCreated.waitFor({state: 'visible'});
     }
 
-    async expectSuccessMessagesVisible(): Promise<void> {
-        await this.textCongratulations.waitFor({state: 'visible'});
-        await this.textMemberPrivileges.waitFor({state: 'visible'});
+    async expectSuccessMessagesInFormSection(): Promise<void> {
+        await expect(this.formSection).toBeVisible();
+        await expect(this.formSection).toContainText(
+            'Congratulations! Your new account has been successfully created!'
+        );
+        await expect(this.formSection).toContainText(
+            'You can now take advantage of member privileges to enhance your online shopping experience with us.'
+        );
     }
 
     async clickContinue(): Promise<void> {
